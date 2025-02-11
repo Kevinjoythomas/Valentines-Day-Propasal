@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>❤️ Valentine's Proposal Predictor ❤️</title>
+    <style>
+        body {
+            background-color: #ffe6f2;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            background-image: linear-gradient(45deg, #ffe6f2 25%, #ffd9e6 25%, #ffd9e6 50%, #ffe6f2 50%, #ffe6f2 75%, #ffd9e6 75%, #ffd9e6 100%);
+            background-size: 40px 40px;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(255, 182, 193, 0.5);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #ff4d88;
+            margin-bottom: 30px;
+            font-size: 2em;
+            text-shadow: 2px 2px 4px rgba(255, 77, 136, 0.2);
+        }
+
+        .heart {
+            color: #ff4d88;
+            font-size: 24px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        input {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: 2px solid #ffb6c1;
+            border-radius: 25px;
+            margin: 10px;
+            width: 80%;
+            max-width: 300px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #ff4d88;
+            box-shadow: 0 0 10px rgba(255, 77, 136, 0.3);
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 25px;
+            background-color: #ff4d88;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            background-color: #ff3377;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #ff4d88;
+            min-height: 50px;
+        }
+
+        #proposal-buttons {
+            display: none;
+            margin-top: 20px;
+        }
+
+        #floating-hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            animation: float 4s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div id="floating-hearts"></div>
+    <div class="container">
+        <h1>❤️ Valentine's Proposal Machine Learning Predictor ❤️</h1>
+        <div class="heart">💝</div>
+        <input type="text" id="name-input" placeholder="Enter their name...">
+        <button onclick="checkName()">Predict Love! 💕</button>
+        <div id="result"></div>
+        <div id="proposal-buttons">
+            <button id="yes-btn" onclick="acceptProposal()" style="font-size: 16px;">Yes! 💖</button>
+            <button onclick="makeYesBigger()">No 💔</button>
+        </div>
+    </div>
+
+    <script>
+        let yesBtnSize = 16;
+        let hearts = [];
+        
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'floating-heart';
+        
+            // Array of different red heart emojis
+            const hearts = ['❤️', '💖', '💘', '💝', '💗', '💓', '💕', '💞', '🩷'];
+            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)]; // Pick a random heart
+        
+            heart.style.left = Math.random() * 100 + 'vw'; // Random X position
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's'; // Random speed
+        
+            document.getElementById('floating-hearts').appendChild(heart);
+        
+            setTimeout(() => {
+                heart.remove();
+            }, 4000);
+        }
+        
+
+
+        setInterval(createHeart, 250);
+
+        function checkName() {
+            const name = document.getElementById('name-input').value.toLowerCase().trim();
+            const resultDiv = document.getElementById('result');
+            const proposalButtons = document.getElementById('proposal-buttons');
+
+            if (['esha', 'esga', 'bablu', 'esgi', 'echu'].includes(name.toLowerCase())) {
+                resultDiv.innerHTML = "💖 Oh my! It's my Esha! Kevin has a special question... 💖<br> Will you PLEASEEE be my valentine!!!💝";
+                proposalButtons.style.display = 'block';
+            } else if (name === '') {
+                resultDiv.innerHTML = "Please enter a name! 💝";
+            } else {
+                const probability = 0;
+                resultDiv.innerHTML = `The probability of ${name} accepting Kevin's proposal is ${probability}% 💫`;
+                proposalButtons.style.display = 'none';
+            }
+        }
+        let count = 0;
+        let words = [ 'Plese say yes! 💖', 'Maybe it was a mistake, try again! 💖', 'I swear it will be fun! 💖', 'Are you sure? 💖', 'UWU! 💖', 'NO! 💖', 'I\'ll let you think carefully! 💖' ];
+        function makeYesBigger() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = words[count % words.length];
+
+            count += 1;
+            yesBtnSize += 10;
+            document.getElementById('yes-btn').style.fontSize = yesBtnSize + 'px';
+            document.getElementById('yes-btn').style.padding = (yesBtnSize * 2) + 'px ' + yesBtnSize + 'px';
+
+            // Add a gif from the gifs folder
+            const gif = document.createElement('img');
+            gif.src = `gifs/no${count % words.length}.gif`; // Assuming you have gifs named no1.gif, no2.gif, etc.
+            gif.style.width = '100px';
+            gif.style.height = '100px';
+            gif.style.marginTop = '10px';
+            resultDiv.appendChild(gif);
+        }
+
+        function acceptProposal() { 
+            const container = document.querySelector('.container');
+            container.innerHTML = `
+                <h1>🎉 She Said YES! 🎉</h1>
+                <div id="celebration-message" style="font-size: 24px; margin: 20px; position: relative; z-index: 1002; text-align: center;">
+                    💑 AWWW TY BABLU 💑<br>
+                    I LOVE YOU MOREEE<333<br>
+                    💝 Happy Valentine's Day! 💝<br>
+                </div>
+            `;
+        
+            // Store occupied positions
+            const placedGifs = [];
+            const gifSize = 150; // Width and height of each gif
+            const maxAttempts = 50; // Max retries for positioning
+        
+            // Get message div dimensions
+            const messageDiv = document.getElementById('celebration-message');
+            const msgRect = messageDiv.getBoundingClientRect();
+            setInterval(createHeart, 10);
+        
+            for (let i = 0; i <= 15; i++) {
+                const gif = document.createElement('img');
+                gif.src = `gifs/yes${i}.gif`;
+                gif.style.width = `${gifSize}px`;
+                gif.style.height = `${gifSize}px`;
+                gif.style.position = 'absolute';
+                gif.style.borderRadius = '10px';
+                gif.style.zIndex = 1000;
+        
+                let validPosition = false;
+                let attempts = 0;
+                let randomX, randomY;
+        
+                while (!validPosition && attempts < maxAttempts) {
+                    randomX = Math.random() * (window.innerWidth - gifSize);
+                    randomY = Math.random() * (window.innerHeight - gifSize);
+        
+                    const gifRect = { left: randomX, top: randomY, right: randomX + gifSize, bottom: randomY + gifSize };
+        
+                    // Check if it overlaps with the message
+                    const overlapsMessage =
+                        gifRect.right > msgRect.left &&
+                        gifRect.left < msgRect.right &&
+                        gifRect.bottom > msgRect.top &&
+                        gifRect.top < msgRect.bottom;
+        
+                    // Check if it overlaps with other gifs
+                    const overlapsOtherGifs = placedGifs.some(existingGif => 
+                        gifRect.right > existingGif.left &&
+                        gifRect.left < existingGif.right &&
+                        gifRect.bottom > existingGif.top &&
+                        gifRect.top < existingGif.bottom
+                    );
+        
+                    if (!overlapsMessage && !overlapsOtherGifs) {
+                        validPosition = true;
+                        placedGifs.push(gifRect); // Save this position
+                    }
+                    attempts++;
+                }
+        
+                gif.style.left = `${randomX}px`;
+                gif.style.top = `${randomY}px`;
+        
+                // Add a floating animation
+                gif.style.animation = `floatAnimation ${2 + Math.random() * 3}s infinite alternate ease-in-out`;
+        
+                document.body.appendChild(gif);
+            }
+        }
+        
+        // Floating animation using CSS
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes floatAnimation {
+                0% { transform: translateY(0px); }
+                100% { transform: translateY(20px); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        
+        
+    </script>
+</body>
+</html>
