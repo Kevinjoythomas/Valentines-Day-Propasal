@@ -176,10 +176,22 @@
             resultDiv.innerHTML = words[count % words.length];
 
             count += 1;
-            yesBtnSize += 10;
+            yesBtnSize *= 1.3;
             document.getElementById('yes-btn').style.fontSize = yesBtnSize + 'px';
             document.getElementById('yes-btn').style.padding = (yesBtnSize * 2) + 'px ' + yesBtnSize + 'px';
 
+            if (yesBtnSize > window.innerWidth * 0.6) {
+                yesBtn.style.position = "fixed";
+                yesBtn.style.top = "50%";
+                yesBtn.style.left = "50%";
+                yesBtn.style.transform = "translate(-50%, -50%) scale(2)"; // Continuous expansion
+                yesBtn.style.width = "100vw";  // Cover the entire screen width
+                yesBtn.style.height = "100vh"; // Cover the entire screen height
+                yesBtn.style.fontSize = "80px";  // Massive text
+                yesBtn.style.zIndex = "9999";  // Bring to front
+                yesBtn.style.borderRadius = "0"; // Remove rounded edges
+                yesBtn.style.transition = "all 0.1s ease-in"; // Smoother takeover
+            }
             // Add a gif from the gifs folder
             const gif = document.createElement('img');
             gif.src = `gifs/no${count % words.length}.gif`; // Assuming you have gifs named no1.gif, no2.gif, etc.
